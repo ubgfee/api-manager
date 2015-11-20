@@ -1,0 +1,109 @@
+<div class="legend">
+  测试接口：<%= info.name %>（<%= info.action %>）
+</div>
+<div class="api-section">
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      接口访问url：
+    </div>
+    <div class="am-u-sm-9">
+      <% if(info.url){ %>
+      <span><%= info.url %></span>
+      <% }else{ %>
+      <span id="apiUrl">
+        <%if(info.moduleId==='default'){%>
+        <%= [info.projectHost, info.action].join('/') %>
+        <%}else{%>
+        <%= [info.projectHost, info.moduleController, info.action].join('/') %>
+        <%}%>
+      </span>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      请求方式：
+    </div>
+    <div class="am-u-sm-9">
+      <input type="hidden" id="method" value="<%= info.method %>"/>
+      <%= info.method %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      参数：
+    </div>
+    <div class="am-u-sm-9">
+      <% if(info.params.length > 0){ %>
+      <table id="apiParams" class="am-table am-table-bordered">
+        <tr>
+          <th>名称(key)</th>
+          <th>类型</th>
+          <th>是否必须</th>
+          <th>描述</th>
+        </tr>
+        <% info.params.forEach(function(param){ %>
+        <tr>
+          <td><%= param.paramName %></td>
+          <td><%= param.paramType %></td>
+          <td><%= param.paramRequired %></td>
+          <td><%= param.paramDesc %></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input data-key="<%= param.paramName %>" type="text" class="am-form-field" placeholder="请根据参数类型输入正确的参数值" <% if(param.paramRequired == "yes"){ %>required<% } %>/>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+      <% }else{ %>
+      无参数
+      <% } %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      接口预期返回值：
+    </div>
+    <div class="am-u-sm-9">
+      <textarea id="returns"><%= info.returns %></textarea>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      接口实际返回值：
+    </div>
+    <div class="am-u-sm-9">
+      <span id="doTestResult" style="color: #008000"></span>
+      <textarea id="test_returns" style="display: none"></textarea>
+    </div>
+    <div class="am-u-sm-12">
+      <% include ../common/json_format.ejs %>
+    </div>
+	  <div class="am-u-sm-12">
+		  <button id="viewErrorHtml" style="display: none;">查看异常返回的信息</button>
+	  </div>
+  </div>
+
+  <br>
+  <div class="api-field">
+    <div class="am-u-sm-12">
+	    <% if(!isCurrentLoginApi && loginApiId){ %>
+	    <a href="/api/test?aid=<%= loginApiId %>"><button type="button" class="am-btn am-btn-primary am-btn-lg">接口登录</button></a>
+	    <% } %>
+      <button id="doTest" type="button" class="am-btn am-btn-secondary am-btn-lg"><% if(isCurrentLoginApi){ %>登 陆<%
+	      }else{ %>测 试 一 下<% } %></button>
+    </div>
+  </div>
+
+</div>
+<script>
+  var isReadOnly = true;
+</script>
+<% include ../common/code_block.ejs %>
+<% include ../common/alert.ejs %>

@@ -1,0 +1,39 @@
+<div class="legend">
+  接口管理
+
+  <a href="/api/add?pid=<%=info.id%>" class="am-btn am-btn-danger am-btn-xs ml20">
+    <i class="am-icon-plus"></i>
+    添加API
+  </a>
+</div>
+
+<% for(var key in info.list){ %>
+<div class="api-list">
+  <div class="module">
+    <%=key%>
+  </div>
+  <div class="api">
+    <ul>
+      <% info.list[key].forEach(function(item, i){ %>
+      <li>
+        <span class="action"><%=item.action%></span>
+        <span class="name"><%=item.name%></span>
+        <span class="op">
+          <a class="am-btn am-btn-default am-btn-xs" href="/api/test?aid=<%=item.id%>">测试</a>
+          <a class="am-btn am-btn-primary am-btn-xs" href="/api/<%=item.id%>">详情</a>
+          <%if(req.user){%>
+          <a class="am-btn am-btn-success am-btn-xs" href="/api/copy?aid=<%=item.id%>">复制</a>
+          <a class="am-btn am-btn-warning am-btn-xs" href="/api/edit?aid=<%=item.id%>">修改</a>
+          <a class="am-btn am-btn-danger am-btn-xs del-api" href="javascript:" data-aid="<%=item.id%>">删除</a>
+          <%}%>
+        </span>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</div>
+<% } %>
+
+<% include ../common/confirm.ejs %>
+
+

@@ -1,0 +1,20 @@
+{
+  "name": "ubgapi",
+  "version": "0.0.1",
+  "authors": [
+    "xuxin <xxwade2010@gmail.com>"
+  ],
+  "description": "依赖的文件",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "amazeui": "~2.4.2",
+    "codemirror": "*"
+  }
+}

@@ -1,0 +1,18 @@
+<div>
+  <h3>项目名称： <%= info.name %> &nbsp;<button id="deleteProject" data-id="<%= info.id %>">删除</button></h3>
+  <hr/>
+  <p>描述： <%= info.desc %></p>
+  <p>参与成员： <%= info.member %></p>
+  <p>host： <%= info.host %></p>
+  <p>创建时间： <%= info.ctime %></p>
+</div>
+<p>
+  <a href="/project/add"><button>添加新项目</button></a>
+  <a href="/module/add?pid=<%= info.id %>"><button>添加分组模块</button></a>
+  <a href="/api/add?pid=<%= info.id %>"><button>添加接口</button></a>
+</p>
+<p>
+  <a href="/module/index?pid=<%= info.id %>"><button>查看模块分组</button></a>
+  <a href="/api/index?pid=<%= info.id %>"><button>查看接口</button></a>
+</p>
+

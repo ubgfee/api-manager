@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+  <title>UBG-API 管理系统</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="/bower_components/amazeui/dist/css/amazeui.min.css">
+  <!--<link rel="stylesheet" href="/styles/importer.css"/>-->
+  <!--STYLES-->
+  <link rel="stylesheet" href="/styles/importer.css">
+  <!--STYLES END-->
+</head>
+
+<body>
+<header class="am-topbar am-topbar-inverse">
+  <div class="api-container">
+    <h1 class="am-topbar-brand">
+      <a href="#"><a href="/"><img src="/images/logo.png" alt=""/></a></a>
+    </h1>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+
+      <div class="am-topbar-right">
+        <%if(req.user){%>
+          <button class="am-btn am-btn-success am-topbar-btn am-btn-sm">
+            <a href="/">
+              <i class="am-icon-list-ul"></i>
+              项目列表
+            </a>
+          </button>
+          <button class="am-btn am-btn-danger am-topbar-btn am-btn-sm">
+            <a href="/project/add">
+              <i class="am-icon-plus"></i>
+              创建项目
+            </a>
+          </button>
+        <%}else{%>
+          <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">
+            <a href="/login">
+              <i class="am-icon-user"></i>
+              登录
+            </a>
+          </button>
+          <button class="am-btn am-btn-warning am-topbar-btn am-btn-sm">
+            <a href="/signup">
+              <i class="am-icon-user-plus"></i>
+              注册
+            </a>
+          </button>
+        <%}%>
+
+        <%if(req.user){%>
+          <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+          <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
+            <%=req.user.username%>
+            <span class="am-icon-caret-down"></span>
+          </button>
+          <ul class="am-dropdown-content">
+            <li><a href="/logout">退出</a></li>
+          </ul>
+        </div>
+        <%}%>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<div class="api-container mh600">
+  <div class="am-g am-g-fixed">
+      <%- body %>
+  </div>
+
+</div>
+
+
+<footer class="api-footer">
+  <div class="api-container">
+    <div class="about"><a href="https://www.xinhehui.com" target="_blank">鑫合汇 <i class="am-icon-coffee"></i></a></div>
+    <p class="api-cp">
+      © 2015 UBG, Inc. Licensed under
+      <a href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a>
+      . Developed with
+      <a href="http://www.jetbrains.com/webstorm/" target="_blank">UBG-F2E</a>
+      .
+    </p>
+  </div>
+
+</footer>
+
+<div class="am-panel am-panel-secondary api-notice-wrap">
+  <div class="am-panel-hd">消息通知 <a id="closeNotice" href="javascript:" class="am-close am-close-alt am-close-spin am-icon-times"></a></div>
+  <div class="am-panel-bd" id="api-notice-content">
+    消息通知主体内容
+  </div>
+</div>
+
+<!--<script src="/js/dependencies/sails.io.js"></script>-->
+
+<!--<script src="/bower_components/jquery/dist/jquery.js"></script>-->
+<!--<script src="/bower_components/amazeui/dist/js/amazeui.js"></script>-->
+
+<!--<script src="/js/user.js"></script>-->
+
+<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/amazeui/dist/js/amazeui.min.js"></script>
+<script src="/js/json_format.js"></script>
+<script src="/js/user.js"></script>
+<!--SCRIPTS END-->
+
+</body>
+</html>

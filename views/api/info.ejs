@@ -1,0 +1,151 @@
+<div class="legend">
+  接口名称：<%= info.name %>（<%= info.action %>）
+</div>
+<div class="api-section">
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      描述：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.desc %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      所属项目：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.projectName %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      所属模块：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.moduleName %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      请求方式：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.method %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      创建时间：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.ctime %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      最后更新时间：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.mtime %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      接口访问url：
+    </div>
+    <div class="am-u-sm-9">
+      <% if(info.url){ %>
+      <span><%= info.url %></span>
+      <% }else{ %>
+      <span>
+        <%if(info.moduleId==='default'){%>
+        <%= [info.projectHost, info.action].join('/') %>
+        <%}else{%>
+        <%= [info.projectHost, info.moduleController, info.action].join('/') %>
+        <%}%>
+      </span>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      参数：
+    </div>
+    <div class="am-u-sm-9">
+      <% if(info.params.length > 0){ %>
+      <table class="am-table am-table-bordered">
+        <tr>
+          <th width="20%">名称(key)</th>
+          <th width="20%">类型</th>
+          <th width="20%">是否必须</th>
+          <th width="40%">描述</th>
+        </tr>
+        <% info.params.forEach(function(param){ %>
+        <tr>
+          <td><%= param.paramName %></td>
+          <td><%= param.paramType %></td>
+          <td><%= param.paramRequired %></td>
+          <td><%= param.paramDesc %></td>
+        </tr>
+        <% }) %>
+      </table>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      返回值：
+    </div>
+    <div class="am-u-sm-9">
+      <textarea id="returns" class="am-form-field" rows="5"><%= info.returns %></textarea>
+    </div>
+  </div>
+
+  <div class="api-field">
+    <div class="am-u-sm-3">
+      备注：
+    </div>
+    <div class="am-u-sm-9">
+      <%= info.remark %>
+    </div>
+  </div>
+
+  <div class="api-op">
+    <input type="hidden" id="pid" value="<%= info.projectId %>"/>
+    <a href="/api/test?aid=<%= info.id %>" class="am-btn am-btn-default am-btn-xs">测试</a>
+    <%if(req.user){%>
+    <a href="/api/copy?aid=<%= info.id %>" class="am-btn am-btn-success am-btn-xs">复制</a>
+    <a href="/api/edit?aid=<%= info.id %>" class="am-btn am-btn-warning am-btn-xs">修改</a>
+    <a href="javascript:void(0);" class="am-btn am-btn-danger am-btn-xs del-api" data-aid="<%= info.id %>">删除</a>
+    <%}%>
+  </div>
+
+</div>
+
+
+<div class="am-modal am-modal-confirm" id="api-confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd"></div>
+    <div class="am-modal-bd">
+      确定要删除这条记录吗？
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var isReadOnly = true;
+</script>
+<% include ../common/code_block.ejs %>

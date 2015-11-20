@@ -1,0 +1,27 @@
+  <div class="alert-white">
+    系统当前拥有 <span style="color: red"><%= number %></span> 个项目：
+  </div>
+
+  <table class="am-table am-table-bordered">
+    <thead>
+      <tr>
+        <th width="20%">名称</th>
+        <th width="20%">描述</th>
+        <th width="20%">成员</th>
+        <th width="20%">主机</th>
+        <th width="20%">创建时间</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% list.forEach(function(item){ %>
+    <tr>
+      <td><a href="/project/<%= item.id %>"><%= item.name %></a></td>
+      <td><%= item.desc %></td>
+      <td><%= item.member %></td>
+      <td><%= item.host %></td>
+      <td><%= item.ctime %></td>
+    </tr>
+    <% }) %>
+    </tbody>
+  </table>
+

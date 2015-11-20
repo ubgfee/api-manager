@@ -1,0 +1,51 @@
+<% var isNew = req.path==='/project/add'?true:false;%>
+<div class="form-container">
+  <form id="addProjectForm" class="am-form am-form-horizontal" data-am-validator>
+    <fieldset>
+      <legend>
+        <%=isNew ? "添加项目" : "项目信息"%>
+      </legend>
+
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-2 am-form-label">项目名称</label>
+        <div class="am-u-sm-10">
+          <input type="text" name="name" class="am-form-field" placeholder="请输入项目名称" value="<%=isNew?'':info.name%>" <%if(!req.user){%>disabled<%}%> required>
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-2 am-form-label">描述</label>
+        <div class="am-u-sm-10">
+          <textarea name="desc" class="am-form-field" rows="5" <%if(!req.user){%>disabled<%}%> required><%=isNew?'':info.desc%></textarea>
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-2 am-form-label">成员</label>
+        <div class="am-u-sm-10">
+          <textarea name="member" class="am-form-field" rows="5" <%if(!req.user){%>disabled<%}%> required><%=isNew?'':info.member%></textarea>
+        </div>
+      </div>
+
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-2 am-form-label">host</label>
+        <div class="am-u-sm-10">
+          <input type="text" name="host" class="am-form-field" placeholder="类似www.xinhehui.com" value="<%=isNew?'':info.host%>" <%if(!req.user){%>disabled<%}%> required>
+        </div>
+      </div>
+      <%if(req.user){%>
+        <div class="am-u-sm-10 am-u-sm-offset-2">
+          <input type="submit" id="addProject" <%if(isNew){%>data-new="1"<%}%> class="am-btn <%=isNew?'am-btn-primary':'am-btn-warning'%>" value="<%=isNew?'提交':'修改'%>">
+          <%if(isNew){%><input type="reset" value="重 置" class="am-btn am-btn-default"/><%}%>
+        </div>
+      <%}%>
+      <%if(!isNew){%><input type="hidden" name="id" value="<%=info.id%>"/><%}%>
+
+    </fieldset>
+
+  </form>
+
+  <% include ../common/alert.ejs %>
+
+</div>

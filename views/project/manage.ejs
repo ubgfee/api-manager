@@ -1,0 +1,21 @@
+<div class="project-filed">
+  <div class="legend">
+    删除项目
+  </div>
+  <div class="content">
+    <a href="javascript:void(0);" class="am-btn am-btn-danger am-btn-lg" id="deleteProject" data-id="<%=info.id%>">确认删除</a>
+  </div>
+</div>
+
+<div class="project-filed">
+  <div class="legend">
+    导出api文档
+  </div>
+  <div class="content">
+    <a href="javascript:void(0);" class="am-btn am-btn-success am-btn-lg" data-id="<%=info.id%>" id="export-excel">导出</a>
+  </div>
+</div>
+
+<input type="hidden" id="projectId" value="<%=info.id%>"/>
+
+<% include ../common/confirm.ejs %>

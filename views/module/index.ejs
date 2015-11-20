@@ -1,0 +1,36 @@
+<a href="/module/add?pid=<%= info.id %>" class="am-btn am-btn-danger am-btn-sm"><i class="am-icon-plus"></i>添加新模块</a>
+
+<div class="alert-white">
+  <%= info.projectName %>: 当前拥有 <span style="color: red"><%= info.number %></span> 个模块
+</div>
+<table class="am-table am-table-bordered">
+  <thead>
+  <tr>
+    <th width="20%">名称</th>
+    <th width="15%">路径</th>
+    <th width="20%">描述</th>
+    <th width="15%">作者</th>
+    <th width="20%">创建时间</th>
+    <th width="15%">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% info.list.forEach(function(item){ %>
+  <tr>
+    <td><%= item.name %></td>
+    <td><%= item.controller %></td>
+    <td><%= item.desc %></td>
+    <td><%= item.author %></td>
+    <td><%= item.ctime %></td>
+    <td>
+      <a href="/module/<%=item.id%>"><i class="am-icon-pencil"></i></a>
+      <a href="javascript:void(0);" class="deleteModule" data-id="<%=item.id%>"><i class="am-icon-close"></i></a>
+    </td>
+  </tr>
+  <% }) %>
+  </tbody>
+</table>
+
+<% include ../common/confirm.ejs %>
+<% include ../common/alert.ejs %>
+

@@ -1,0 +1,189 @@
+<% var isCopy = req.path==="/api/copy"?true:false;%>
+<div class="form-container">
+  <form id="addApiForm" class="am-form am-form-horizontal" data-am-validator>
+    <fieldset>
+      <legend>
+        <%=(isNew||(!isNew&&isCopy))? info.name : info.projectName%>：<%=(isNew||(!isNew&&isCopy)) ? "添加接口" : "接口信息"%>
+        <a href="javascript:history.go(-1);" class="am-btn am-btn-danger am-btn-xs ml20">
+          <i class="am-icon-plus"></i>
+          返回
+        </a>
+      </legend>
+
+      <input type="hidden" name="projectId" id="projectId" value="<%= isNew ? info.id : info.projectId %>"/>
+      <input type="hidden" name="projectName" value="<%= isNew ? info.name : info.projectName %>"/>
+      <input type="hidden" name="projectHost" value="<%= isNew ? info.host : info.projectHost %>"/>
+      <%if(!isNew && !isCopy){%>
+        <input type="hidden" name="id" value="<%=info.id%>"/>
+      <%}%>
+
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-3 am-form-label">接口名称</label>
+        <div class="am-u-sm-9">
+          <input type="text" name="name" class="am-form-field"  value="<%=isNew?'':info.name%>" required>
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-3 am-form-label">接口（英文）</label>
+        <div class="am-u-sm-9">
+          <input type="text" name="action" class="am-form-field"  value="<%=isNew?'':info.action%>" required>
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-3 am-form-label">描述</label>
+        <div class="am-u-sm-9">
+          <textarea name="desc" class="am-form-field" rows="5" required><%=isNew?'':info.desc%></textarea>
+        </div>
+      </div>
+
+	    <% if(isNew){ %>
+	    <div class="am-form-group am-form-group-sm">
+		    <label for="" class="am-u-sm-3 am-form-label">是否为登录接口</label>
+		    <div class="am-u-sm-9">
+			    <input style="margin-top: 12px" name="isLoginApi" type="checkbox" value="0" onclick="this.value = this.checked ? 1 : 0">
+		    </div>
+	    </div>
+	    <% } %>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="moduleId" class="am-u-sm-3 am-form-label">method</label>
+        <div class="am-u-sm-9">
+          <select name="method">
+            <option value="get" <%if(!isNew && info.method==='get'){%>selected<%}%>>GET</option>
+            <option value="post" <%if(!isNew && info.method==='post'){%>selected<%}%>>POST</option>
+          </select>
+        </div>
+        <span class="am-form-caret"></span>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="moduleId" class="am-u-sm-3 am-form-label">所属模块</label>
+        <div class="am-u-sm-9">
+          <select name="moduleId" id="moduleId">
+            <option value="default" data-controller="default" <%if(!isNew && info.moduleId==='default'){%>selected<%}%>>未分组</option>
+            <% if(moduleList.length > 0){ %>
+            <% moduleList.forEach(function(item){ %>
+            <option value="<%= item.id %>" data-controller="<%= item.controller %>" <%if(!isNew && info.moduleId===item.id){%>selected<%}%>><%= item.name %></option>
+            <% }) %>
+            <% } %>
+          </select>
+        </div>
+        <span class="am-form-caret"></span>
+        <input type="hidden" name="moduleName" id="moduleName" value="<%=isNew?'':info.moduleName%>"/>
+        <input type="hidden" name="moduleController" id="moduleController" value="<%=isNew?'':info.moduleController%>"/>
+      </div>
+
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-3 am-form-label">URL</label>
+        <div class="am-u-sm-9">
+          <input type="text" name="url" class="am-form-field" value="<%=isNew?'':info.url%>" placeholder="调用外部地址时填写">
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-3 am-form-label">请求参数</label>
+        <div class="am-u-sm-9">
+          <a class="am-btn am-btn-success am-btn-xs" href="javascript:" id="addParam">
+            <i class="am-icon-plus"></i>
+            添加参数
+          </a>
+        </div>
+
+        <div class="paramRow dn">
+          <span class="span1">
+            <input type="text" name="param1" placeholder="参数名"/>
+          </span>
+          <span class="span2">
+             <select name="param2">
+               <option value="string">string</option>
+               <option value="integer">integer</option>
+               <option value="float">float</option>
+               <option value="boolean">boolean</option>
+               <option value="object">object</option>
+               <option value="file">file</option>
+             </select>
+          </span>
+          <span class="span3">
+            <select name="param3">
+              <option value="yes">必须传入</option>
+              <option value="no">可选传入</option>
+            </select>
+          </span>
+          <span class="span4">
+            <input type="text" name="param4" placeholder="参数解释"/>
+          </span>
+          <span class="span5">
+            <a class="am-btn am-btn-danger am-btn-xs delParam" href="javascript:">删除</a>
+          </span>
+        </div>
+      </div>
+
+      <div class="am-u-sm-offset-3 am-u-sm-9" id="paramsDiv">
+        <%if(!isNew){%>
+          <%info.params.forEach(function(item, index){%>
+            <div class="paramRow">
+              <span class="span1">
+                <input type="text" name="paramName[<%=index%>]" placeholder="参数名" value="<%=item.paramName%>" data-params-counter/>
+              </span>
+              <span class="span2">
+                 <select name="paramType[<%=index%>]">
+                   <option value="string" <%if(item.paramType==='string'){%>selected<%}%>>string</option>
+                   <option value="integer" <%if(item.paramType==='integer'){%>selected<%}%>>integer</option>
+                   <option value="float" <%if(item.paramType==='float'){%>selected<%}%>>float</option>
+                   <option value="boolean" <%if(item.paramType==='boolean'){%>selected<%}%>>boolean</option>
+                   <option value="object" <%if(item.paramType==='object'){%>selected<%}%>>object</option>
+                   <option value="file" <%if(item.paramType==='file'){%>selected<%}%>>file</option>
+                 </select>
+              </span>
+              <span class="span3">
+                <select name="paramRequired[<%=index%>]">
+                  <option value="yes" <%if(item.paramRequired==='yes'){%>selected<%}%>>必须传入</option>
+                  <option value="no" <%if(item.paramRequired==='no'){%>selected<%}%>>可选传入</option>
+                </select>
+              </span>
+              <span class="span4">
+                <input type="text" name="paramDesc[<%=index%>]" placeholder="参数解释" value="<%=item.paramDesc%>"/>
+              </span>
+              <span class="span5">
+                <a class="am-btn am-btn-danger am-btn-xs delParam" href="javascript:">删除</a>
+              </span>
+            </div>
+          <%})%>
+        <%}%>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-3 am-form-label">返回对象</label>
+        <div class="am-u-sm-9">
+          <textarea name="returns" class="am-form-field" rows="5" id="returns" required><%=isNew?'':info.returns%></textarea>
+        </div>
+      </div>
+
+      <div class="am-form-group am-form-group-sm">
+        <label for="" class="am-u-sm-3 am-form-label">备注</label>
+        <div class="am-u-sm-9">
+          <input type="text" name="remark" class="am-form-field" value="<%=isNew?'':info.remark%>" >
+        </div>
+      </div>
+
+      <div class="am-u-sm-9 am-u-sm-offset-3">
+        <input type="submit" id="addApi" <%if(isNew || (!isNew && isCopy)){%>data-new="1"<%}%> class="am-btn <%=(isNew || (!isNew && isCopy))?'am-btn-primary':'am-btn-warning'%>" value="<%=(isNew || (!isNew && isCopy))?'提交':'修改'%>">
+        <%if(isNew){%><input type="reset" value="重 置" class="am-btn am-btn-default"/><%}%>
+      </div>
+
+    </fieldset>
+
+  </form>
+
+</div>
+
+<% if(!isNew){ %>
+<script>
+  var isReadOnly = false;
+</script>
+<% include ../common/code_block.ejs %>
+<% } %>
+<% include ../common/alert.ejs %>

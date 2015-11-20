@@ -1,0 +1,39 @@
+<form id="editApiForm">
+  <div>
+    <input type="hidden" name="id" value="<%= info.id %>"/>
+    <h3><%= info.projectName %>：修改接口</h3>
+    <hr/>
+    <p><label for="">接口名称: <input type="text" name="name" value="<%= info.name %>" /></label></p>
+    <p><label for="">接口（英文）: <input type="text" name="action" value="<%= info.action %>"/></label></p>
+    <p><label for="">描述: <input type="text" name="desc"  value="<%= info.desc %>" /></label></p>
+    <p><label for="">是否为独立接口(选择是所属模块将失效):<input type="checkbox" id="isSingle"/></label></p>
+    <p><label for="">所属模块:
+      <select name="moduleId" id="moduleId">
+        <option value="">请选择模块</option>
+        <% if(moduleList.length > 0){ %>
+        <% moduleList.forEach(function(item){ %>
+        <option value="<%= item.id %>" data-controller="<%= item.controller %>" <% if(item.id == info.moduleId){ %>selected<% }%>><%= item.name %></option>
+        <% }) %>
+        <% } %>
+      </select>
+      <a href="/module/add?pid=<%= info.projectId %>">添加模块</a>
+    </label></p>
+    <p><label for="">method:
+      <select name="method" id="methodType">
+        <option value="get" <% if(info.method == 'get'){ %>selected<% }%>>get</option>
+        <option value="post" <% if(info.method == 'post'){ %>selected<% }%>>post</option>
+        <option value="put" <% if(info.method == 'put'){ %>selected<% }%>>put</option>
+        <option value="delete" <% if(info.method == 'delete'){ %>selected<% }%>>delete</option>
+      </select>
+    </label></p>
+    <p><label for="">Url: <input type="text" name="url" value="<%= info.url %>"/></label></p>
+    <p><label for="">请求参数:<a href="javascript:" id="addParam">+</a></label></p>
+    <p><div id="paramsDiv"></div>
+    <p><label for="">返回对象: <textarea name="returns" id="returns"><%= info.returns %></textarea></label></p>
+    <p><label for="">备注: <textarea name="remark"><%= info.remark %></textarea></label></p>
+  </div>
+  <div>
+    <button id="editApi">确 定</button>
+    <input type="reset" value="重 置"/>
+  </div>
+</form>

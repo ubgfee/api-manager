@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/bower_components/codemirror/lib/codemirror.css"/>
+<link rel="stylesheet" href="/bower_components/codemirror/theme/eclipse.css"/>
+<style>
+  .CodeMirror{
+    border: 1px solid #ccc;
+    height: 240px;
+  }
+  .CodeMirror pre,
+  .CodeMirror-gutter-wrapper{
+    line-height: normal;
+  }
+</style>
+<script src="/bower_components/codemirror/lib/codemirror.js"></script>
+<script src="/bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script>
+  var RETURNS_EDITOR = CodeMirror.fromTextArea(document.getElementById("returns"), {
+    lineNumbers: true,
+    mode: {
+      name: "javascript",
+      json: true
+    },
+    readOnly: isReadOnly,
+    lineWrapping: true,
+    matchBrackets: true,
+    theme: 'eclipse'
+  });
+</script>
